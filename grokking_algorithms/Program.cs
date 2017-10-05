@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Algorithms;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,6 +11,7 @@ namespace grokking_algorithms
     {
         static void Main(string[] args)
         {
+            BreadthFirstSearch.Test2();
         }
     }
 }
