@@ -1,23 +1,10 @@
-﻿using System;
+﻿using grokking_algorithms.DataStructures.Node;
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace grokking_algorithms.DataStructures
 {
-
-    public class Node<T>
-    {
-        public T Data { get; }
-        public Node<T> Next { get; set; }
-        public Node(T data)
-        {
-            this.Data = data;
-        }
-    }
-
     public class UndirectedUnweightedHashTableGraph<T>
     {
         private Dictionary<Node<T>, LinkedList<Node<T>>> hashTable;
