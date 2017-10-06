@@ -3,11 +3,16 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
-namespace grokking_algorithms.DataStructures
+namespace grokking_algorithms.DataStructures.Graph
 {
     public class UndirectedUnweightedHashTableGraph<T>
     {
         private Dictionary<Node<T>, LinkedList<Node<T>>> hashTable;
+
+        public UndirectedUnweightedHashTableGraph()
+        {
+            this.hashTable = new Dictionary<Node<T>, LinkedList<Node<T>>>();
+        }
 
         /// <summary>
         /// Adds a new node to the graph.
@@ -115,57 +120,71 @@ namespace grokking_algorithms.DataStructures
             return new LinkedList<Node<T>>();
         }
 
-        public IEnumerator BreadthEnumerator(Node<T> initial)
+        public GraphBreadthEnumerator<T> BreadthEnumerator(Node<T> initial)
         {
-            throw new NotImplementedException();
-        }
-    }
-
-    public class BreadthEnumerator<T> : IEnumerator<Node<T>>
-    {
-        private UndirectedUnweightedHashTableGraph<T> graph;
-        private Queue<Node<T>> searchQueue;
-        private LinkedList<Node<T>> visited;
-        private Node<T> initial;
-        private Node<T> curNode;
-
-        public BreadthEnumerator(UndirectedUnweightedHashTableGraph<T> graph, Node<T> initial)
-        {
-            this.graph = graph;
-            this.initial = initial;
-            this.Reset();
+            return new GraphBreadthEnumerator<T>(this, initial);
         }
 
-        public Node<T> Current => this.curNode;
-
-        object IEnumerator.Current => Current;
-
-        public void Dispose() { }
-
-        public bool MoveNext()
+        public override string ToString()
         {
-            if(this.searchQueue.Count == 0)
+            var strBuilder = "[";
+
+            foreach(var keyValue in this.hashTable)
             {
-                return false;
+                strBuilder += keyValue.Key.Data + ": [";
+                var count = 0;
+                var iterator = keyValue.Value.GetEnumerator();
+                while(count < keyValue.Value.Count - 1)
+                {
+                    count++;
+                    iterator.MoveNext();
+                    strBuilder += iterator.Current.Data + ",";
+                }
+
+                iterator.MoveNext();
+                if(iterator.Current != null)
+                {
+                    strBuilder += iterator.Current.Data;
+                }
+                
+                strBuilder += "]\n";
             }
 
-            this.curNode = this.searchQueue.Dequeue();
-            var edges = this.graph.GetEdges(this.curNode);
-            foreach(var node in edges)
-            {
-                this.searchQueue.Enqueue(node);
-            }
-
-            return true;
+            return strBuilder + "]";
         }
 
-        public void Reset()
+        public static void Test()
         {
-            this.searchQueue = new Queue<Node<T>>();
-            this.visited = new LinkedList<Node<T>>();
-            this.curNode = default(Node<T>);
+            var graph = new UndirectedUnweightedHashTableGraph<string>();
+            var you = new Node<string>("you");
+            var alice = new Node<string>("alice");
+            var claire = new Node<string>("claire");
+            var bob = new Node<string>("bob");
+            var anuj = new Node<string>("anuj");
+            var peggy = new Node<string>("peggy");
+            var thom = new Node<string>("thom");
+            var jonny = new Node<string>("jonny");
 
-            this.searchQueue.Enqueue(this.initial);
+            graph.Add(you, alice);
+            graph.Add(you, bob);
+            graph.Add(you, claire);
+
+            graph.Add(bob, anuj);
+            graph.Add(bob, peggy);
+
+            graph.Add(alice, peggy);
+
+            graph.Add(claire, thom);
+            graph.Add(claire, jonny);
+
+            Console.WriteLine(graph.ToString());
+            
+            foreach (var node in graph.BreadthEnumerator(you))
+            {
+                Console.WriteLine(node.Data);
+            }
+
+            Console.Read();
         }
     }
 }

@@ -53,8 +53,11 @@ namespace DataStructures
                 result = null;
                 return false;
             }
-
-            search_queue.Enqueue(this.hashTable[initial]);
+            
+            foreach ( var node in this.hashTable[initial])
+            {
+                search_queue.Enqueue(node);
+            }
             while(!search_queue.isEmpty())
             {
                 var item = search_queue.Dequeue();
@@ -72,7 +75,10 @@ namespace DataStructures
                 else if(this.hashTable.ContainsKey(item))
                 {
                     searched.Add(item);
-                    search_queue.Enqueue(this.hashTable[item]);
+                    foreach (var node in this.hashTable[initial])
+                    {
+                        search_queue.Enqueue(node);
+                    }
                 }
             }
 

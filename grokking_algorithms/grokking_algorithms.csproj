@@ -45,6 +45,7 @@
   <ItemGroup>
     <Compile Include="Algorithms\BinarySearch.cs" />
     <Compile Include="Algorithms\BreadthFirstSearch.cs" />
+    <Compile Include="DataStructures\Graph\GraphBreadthEnumerator.cs" />
     <Compile Include="DataStructures\Graph\UndirectedUnweightedHashTableGraph.cs" />
     <Compile Include="DataStructures\Node\LinkedListNode.cs" />
     <Compile Include="DataStructures\Node\Node.cs" />

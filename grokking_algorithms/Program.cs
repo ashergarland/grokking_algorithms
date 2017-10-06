@@ -1,4 +1,5 @@
 ﻿using Algorithms;
+using grokking_algorithms.DataStructures.Graph;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,7 +12,7 @@ namespace grokking_algorithms
     {
         static void Main(string[] args)
         {
-            BreadthFirstSearch.Test2();
+            UndirectedUnweightedHashTableGraph<string>.Test();
         }
     }
 }

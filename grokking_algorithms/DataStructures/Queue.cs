@@ -1,12 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
+using grokking_algorithms.DataStructures.Node;
 using Utilities;
+using DataStructures_bad;
 
 namespace DataStructures
 {
     public class Queue<T>
     {
-        private Node<T> head;
+        private LinkedListNode<T> head;
         private int size;
 
         public Queue()
@@ -22,7 +23,7 @@ namespace DataStructures
 
         public void Enqueue(T data)
         {
-            var node = new Node<T>(data);
+            var node = new LinkedListNode<T>(data);
             
             if(this.head == null)
             {

@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections;
-using DataStructures;
+using grokking_algorithms.DataStructures.Node;
 
 namespace DataStructures_bad
 {
-    public class LinkedList<T>: IEnumerable
+    public class LinkedList<T>: System.Collections.IEnumerable
     {
-        private Node<T> head;
-        private Node<T> tail;
+        private LinkedListNode<T> head;
+        private LinkedListNode<T> tail;
         private int size;
 
         public LinkedList()
@@ -50,7 +50,7 @@ namespace DataStructures_bad
         /// <param name="data">data to be added</param>
         public void Add(T data)
         {
-            var node = new Node<T>(data);
+            var node = new LinkedListNode<T>(data);
             if(this.isEmpty())
             {
                 this.head = node;
@@ -101,7 +101,7 @@ namespace DataStructures_bad
             return true;
         }
 
-        private Node<T> Walk(int steps)
+        private LinkedListNode<T> Walk(int steps)
         {
             var selected = this.head;
 
@@ -165,27 +165,32 @@ namespace DataStructures_bad
             Console.Read();
         }
 
-        public IEnumerator GetEnumerator()
+        public LinkedListEnumerator<T> GetEnumerator()
         {
             return new LinkedListEnumerator<T>(this.head);
         }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return this.GetEnumerator();
+        }
     }
 
-    public class LinkedListEnumerator<T> : IEnumerator
+    public class LinkedListEnumerator<T> : System.Collections.Generic.IEnumerator<T>
     {
-        private Node<T> current;
-        private Node<T> head;
+        private LinkedListNode<T> current;
+        private LinkedListNode<T> head;
 
-        public LinkedListEnumerator(Node<T> head)
+        public LinkedListEnumerator(LinkedListNode<T> head)
         {
             this.head = head;
-            this.current = new Node<T>(default(T))
+            this.current = new LinkedListNode<T>(default(T))
             {
                 Next = this.head
             };
         }
 
-        public object Current
+        public T Current
         {
             get
             {
@@ -197,7 +202,7 @@ namespace DataStructures_bad
                     return default(T);
                 }
 
-                if(this.current.Next == this.head)
+                if (this.current.Next == this.head)
                 {
                     return default(T);
                 }
@@ -205,6 +210,10 @@ namespace DataStructures_bad
                 return this.current.Data;
             }
         }
+
+        object IEnumerator.Current => this.Current;
+
+        public void Dispose() { }
 
         public bool MoveNext()
         {
@@ -219,7 +228,7 @@ namespace DataStructures_bad
 
         public void Reset()
         {
-            this.current = new Node<T>(default(T))
+            this.current = new LinkedListNode<T>(default(T))
             {
                 Next = this.head
             };

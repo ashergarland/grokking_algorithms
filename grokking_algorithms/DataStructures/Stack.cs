@@ -1,11 +1,12 @@
-﻿using System;
+﻿using grokking_algorithms.DataStructures.Node;
+using System;
 using Utilities;
 
 namespace DataStructures
 {
     public class Stack<T>
     {
-        private Node<T> head;
+        private LinkedListNode<T> head;
         
         public Stack()
         {
@@ -14,7 +15,7 @@ namespace DataStructures
 
         public void Push(T data)
         {
-            var node = new Node<T>(data);
+            var node = new LinkedListNode<T>(data);
 
             if(this.head != null)
             {
